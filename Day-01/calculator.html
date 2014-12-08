@@ -3,10 +3,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Calculator</title>
+	<style>
+	label, #btnCalculate{
+		display : block;
+	}
+	</style>
 </head>
 <body>
 	<label for="txtNumber1">Number 1:</label>
-	<inpu:text id="txtNumber1"></inpu:text>
+	<input type="text" name="" id="txtNumber1">
 	<label for="txtNumber2">Number 2:</label>
 	<input type="text" name="" id="txtNumber2">
 	<label for="selectOperation">Operation :</label>
@@ -17,6 +22,6 @@
 		<option value="divide">Divide</option>
 	</select>
 	<input type="button" value="Calculate" id="btnCalculate">
-	<div id="divResult"></div>
+	<div id="divResult">[Result]</div>
 </body>
 </html>
