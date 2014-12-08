@@ -7,13 +7,69 @@
 	label, #btnCalculate{
 		display : block;
 	}
+	.error{
+		color : red;
+		font-style: italic;
+	}
+	.negative{
+		color : red;
+	}
 	</style>
+	<script>
+	window.addEventListener("DOMContentLoaded", init);
+	function init(){
+		document.getElementById("txtNumber1").addEventListener("keyup", onNumberBlur);
+		document.getElementById("txtNumber2").addEventListener("keyup", onNumberBlur);
+		document.getElementById("btnCalculate").addEventListener("click", onBtnCalculateClick);
+		document.getElementById("selectOperation").addEventListener("change", calculate);
+	}
+	function onNumberBlur(evt){
+		var txtBox = evt.srcElement;
+		var number = txtBox.value;
+		var error = txtBox.nextElementSibling;
+		if (isNaN(number) || number === ""){
+			error.innerHTML = "Invalid value";
+		} else {
+			error.innerHTML = "";
+		}
+	}
+	
+	function onBtnCalculateClick(){
+		calculate();
+	}
+	function calculate(){
+		var n1 = parseInt(document.getElementById("txtNumber1").value,10),
+			n2 = parseInt(document.getElementById("txtNumber2").value,10),
+			operation = document.getElementById("selectOperation").value;
+		var result = 0;
+		switch (operation){
+			case "add":
+				result = n1 + n2;
+				break;
+			case  "subtract":
+				result = n1 - n2;
+				break;
+			case "multiply":
+				result = n1 * n2;
+				break;
+			case "divide":
+				result = n1 / n2;
+				break;
+		}
+		document.getElementById("divResult").innerHTML = result;
+		if (result < 0){
+			document.getElementById("divResult").classList.add("negative");
+		} else {
+			document.getElementById("divResult").classList.remove("negative");
+		}
+	}
+	</script>
 </head>
 <body>
 	<label for="txtNumber1">Number 1:</label>
-	<input type="text" name="" id="txtNumber1">
+	<input type="text" name="" id="txtNumber1"><span class="error" id="spanErrorNumber1"></span>
 	<label for="txtNumber2">Number 2:</label>
-	<input type="text" name="" id="txtNumber2">
+	<input type="text" name="" id="txtNumber2"><span class="error" id="spanErrorNumber2"></span>
 	<label for="selectOperation">Operation :</label>
 	<select name="" id="selectOperation">
 		<option value="add">Add</option>
@@ -22,6 +78,6 @@
 		<option value="divide">Divide</option>
 	</select>
 	<input type="button" value="Calculate" id="btnCalculate">
-	<div id="divResult">[Result]</div>
+	<div id="divResult" class="dummyClass anotherDummyClass">[Result]</div>
 </body>
 </html>
