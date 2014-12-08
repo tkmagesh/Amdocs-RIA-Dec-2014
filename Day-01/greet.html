@@ -3,11 +3,25 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
+		<script>
+			function greet(){
+			  var txtName = document.getElementById("txtName");
+			  var divMessage = document.getElementById("divGreetMsg");
+			  var greetMsg = "Hi " + txtName.value;
+			  divMessage.innerHTML = greetMsg;
+			}
+			function init(){
+				var btnGreet = document.getElementById("btnGreet");
+				btnGreet.addEventListener("click", greet);
+			}
+			window.addEventListener("DOMContentLoaded", init);
+		</script>
 	</head>
 	<body>
 		<span>Name :</span>	
 		<input type="text" name="" id="txtName">
 		<input type="button" value="Greet" id="btnGreet">
-		<div id="divGreetMsg"></div>
+		<div id="divGreetMsg">[Greeting will be displayed here]</div>
+		
 	</body>
 </html>
