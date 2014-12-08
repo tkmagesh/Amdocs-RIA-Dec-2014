@@ -20,24 +20,27 @@
 	function init(){
 		document.getElementById("txtNumber1").addEventListener("keyup", onNumberBlur);
 		document.getElementById("txtNumber2").addEventListener("keyup", onNumberBlur);
-		document.getElementById("btnCalculate").addEventListener("click", onBtnCalculateClick);
+		document.getElementById("btnCalculate").addEventListener("click", calculate);
 		document.getElementById("selectOperation").addEventListener("change", calculate);
 	}
 	function onNumberBlur(evt){
 		var txtBox = evt.srcElement;
 		var number = txtBox.value;
 		var error = txtBox.nextElementSibling;
-		if (isNaN(number) || number === ""){
+		if (!isValid(number)){
 			error.innerHTML = "Invalid value";
 		} else {
 			error.innerHTML = "";
 		}
 	}
-	
-	function onBtnCalculateClick(){
-		calculate();
+	function isValid(number){
+		return !(isNaN(number) || number === "");
 	}
+	
+	
 	function calculate(){
+		//var 
+		if (isValid(document.getElementById("txtNumber1").value) && isValid(document.getElementById("txtNumber2").value)){
 		var n1 = parseInt(document.getElementById("txtNumber1").value,10),
 			n2 = parseInt(document.getElementById("txtNumber2").value,10),
 			operation = document.getElementById("selectOperation").value;
@@ -62,6 +65,7 @@
 		} else {
 			document.getElementById("divResult").classList.remove("negative");
 		}
+	}
 	}
 	</script>
 </head>
