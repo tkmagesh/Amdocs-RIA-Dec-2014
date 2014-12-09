@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Event Bubbling Demo</title>
+	<style type="text/css">
+	div{
+		margin : 10px;
+		padding: 20px;
+		border-width: 2px;
+		border-style: solid;
+	}
+	.parent{
+		border-color: blue;
+		background-color: lightblue;
+	}
+	.child{
+		border-color: red;
+		background-color: lightpink;
+	}
+	</style>
+	<script>
+	function onClick(evt){
+		console.dir(evt);
+	}
+	</script>
+</head>
+<body>
+	<div class="parent" id="divParent">
+		<span id="divParentSpan">This is the parent</span>
+		<div class="child" id="divChild">
+			<span id="divChildSpan">This is the child</span>
+		</div>
+	</div>
+</body>
+</html>
