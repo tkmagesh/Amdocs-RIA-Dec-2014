@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task Manager</title>
+	<style>
+	.completed{
+		color : red;
+		text-decoration: line-through;
+		font-style: italic;
+		font-weight: bold;
+	}
+	#divMessages{
+		position: absolute;
+		right : 0px;
+		bottom: 0px;
+		margin: 10px;
+	}
+	.divMessage{
+		margin: 5px;
+		padding: 5px;
+		border : 1px solid black;
+		background-color: gray;
+		color : white;
+	}
+	</style>
+	<script src="jquery-2.1.1.js"></script>
+	<script>
+	/*
+		Use Cases
+
+		1. Add a new task
+		2. Mark/unmark a task as "completed"
+		3. Remove completed tasks
+
+	 */	
+	 $(function (){
+	 	$("#btnAddTask").click(onBtnAddTaskClick);
+	 	$("#olTaskList").click(onTaskItemClick);
+	 	$("#btnRemoveCompleted").click(onBtnRemoveCompletedClick);
+	 	$("#divMessage").hide();
+	 });
+	 
+
+	 function onBtnRemoveCompletedClick(){
+		$("#olTaskList > .completed").slideUp(function(){
+			$(this).remove();
+		});
+		displayMessage("Zero or more completed tasks are removed");
+	 }
+
+	 function onTaskItemClick(evt){
+	  	$(evt.target).toggleClass("completed");
+	 }
+	 function onBtnAddTaskClick(){
+	 	$("<li></li>")
+	 		.html($("#txtTask").val())
+	 		.hide()
+	 		.appendTo("#olTaskList")
+	 		.slideDown();
+	 	displayMessage("A new task is added");
+	 }
+	 function displayMessage(msg){
+	 	$("<div>")
+	 		.addClass("divMessage")
+	 		.html(msg)
+	 		.appendTo("#divMessages")
+	 		.hide()
+	 		.slideDown(250)
+	 		.delay(3000)
+	 		.slideUp(250, function(){
+	 			$(this).remove();
+	 		});
+	 }
+
+	</script>
+</head>
+<body>
+	<h1>Task Manager</h1>
+	<hr>
+	<label for="txtTask">Task :</label>
+	<input type="text" name="" id="txtTask">
+	<input type="button" value="Add Task" id="btnAddTask">
+	<input type="button" value="Remove Completed" id="btnRemoveCompleted">
+	<ol id="olTaskList">
+		<li>Task - 1</li>
+		<li class="completed">Task - 2</li>
+		<li>Task - 3</li>
+	</ol>
+	<div id="divMessages">
+		
+	</div>
+	
+</body>
+</html>
