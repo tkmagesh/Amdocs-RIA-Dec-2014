@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Calculator</title>
+	<style>
+	label, #btnCalculate{
+		display : block;
+	}
+	.error{
+		color : red;
+		font-style: italic;
+	}
+	.negative{
+		color : red;
+	}
+	</style>
+	<script src="jquery-2.1.1.js"></script>
+	<script>
+	window.addEventListener("DOMContentLoaded", init);
+	function init(){
+		$("#txtNumber1").keyup(onNumberBlur);
+		$("#txtNumber2").keyup(onNumberBlur);
+		$("#btnCalculate").click(calculate);
+		$("#selectOperation").change(calculate);
+	}
+	function onNumberBlur(evt){
+		var $txtBox = $(evt.target);
+		if (!isValid($txtBox.val())){
+			$txtBox.next().html("Invalid value");
+		} else {
+			$txtBox.next().html("");
+		}
+	}
+	function isValid(number){
+		return !(isNaN(number) || number === "");
+	}
+	
+	
+	function calculate(){
+		//var 
+		if (isValid($("#txtNumber1").val()) && isValid($("#txtNumber2").val())){
+		var n1 = parseInt($("#txtNumber1").val(),10),
+			n2 = parseInt($("#txtNumber2").val(),10),
+			operation = $("#selectOperation").val();
+		var result = 0;
+		switch (operation){
+			case "add":
+				result = n1 + n2;
+				break;
+			case  "subtract":
+				result = n1 - n2;
+				break;
+			case "multiply":
+				result = n1 * n2;
+				break;
+			case "divide":
+				result = n1 / n2;
+				break;
+		}
+		$("#divResult").html(result);
+		if (result < 0){
+			$("#divResult").addClass("negative");
+		} else {
+			$("#divResult").removeClass("negative");
+		}
+	}
+	}
+	</script>
+</head>
+<body>
+	<label for="txtNumber1">Number 1:</label>
+	<input type="text" name="" id="txtNumber1"><span class="error" id="spanErrorNumber1"></span>
+	<label for="txtNumber2">Number 2:</label>
+	<input type="text" name="" id="txtNumber2"><span class="error" id="spanErrorNumber2"></span>
+	<label for="selectOperation">Operation :</label>
+	<select name="" id="selectOperation">
+		<option value="add">Add</option>
+		<option value="subtract">Subtract</option>
+		<option value="multiply">Multiply</option>
+		<option value="divide">Divide</option>
+	</select>
+	<input type="button" value="Calculate" id="btnCalculate">
+	<div id="divResult" class="dummyClass anotherDummyClass">[Result]</div>
+</body>
+</html>
