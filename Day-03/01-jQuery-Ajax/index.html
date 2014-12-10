@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax Demos</title>
+	<script src="jquery-2.1.1.js"></script>
+	<script src="handlebars-v2.0.0.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$("#btnLoadHTML").click(function(){
+			/*$.ajax({
+				type : "GET",
+				url : "/fragment.html",
+				contentType : "text/html",
+				success : function(response){
+					$(".content").append(response);
+				}
+			});*/
+			/*
+				$.get("/fragment.html", function(response){
+					$(".content").append(response);
+				}, "html");
+			*/
+			$(".content").load("/fragment.html");
+		});	
+		$("#btnLoadProducts").click(function(){
+			$.getJSON("/products.json", function(response){
+				var products = response.products;
+
+				/*var tbl = "<table border='1'>";
+				$.each(products, function(index, product){
+					var row= "<tr><td>" + product.id + "</td><td>" + product.name + "</td><td>" + product.cost + "</td><td>" + product.units + "</td></tr>";
+					tbl += row;
+				});
+				tbl += "</table>";
+				$(".products").append(tbl);*/
+
+				/*Using Templates*/
+				var templateHTML = $("#productsTemplate").html();
+				var templateFn = Handlebars.compile(templateHTML);
+				var generatedHTML = templateFn(response);
+				$(".products").append(generatedHTML);
+			})
+		})
+	})
+	
+	</script>
+	<script type="text/template" id="productsTemplate">
+	<table boder="1">
+		<caption>Products</caption>
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Units</th>
+				<th>Cost</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each products}}
+			<tr>
+				<td>{{id}}</td>
+				<td>{{name}}</td>
+				<td>{{units}}</td>
+				<td>{{cost}}</td>
+			</tr>	
+			{{/each}}
+		</tbody>
+	</table>
+	</script>
+</head>
+<body>
+	<input type="button" value="Load HTML" id="btnLoadHTML">
+	<div class="content"></div>
+	<input type="button" value="Load Products" id="btnLoadProducts">
+	<div class="products"></div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{"products" :[
+	{"id" : 2, "name" : "Pen", "units" : 80, "cost" : 90},
+	{"id" : 6, "name" : "Hen", "units" : 70, "cost" : 30},
+	{"id" : 7, "name" : "Den", "units" : 30, "cost" : 60},
+	{"id" : 4, "name" : "Zen", "units" : 50, "cost" : 20}
+]}
