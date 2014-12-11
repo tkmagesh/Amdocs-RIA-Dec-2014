@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Task Manager</title>
+	<style type="text/css">
+	.completed{
+		color : red;
+		text-decoration: line-through;
+		font-style: italic;
+	}
+	</style>
+	<script src="jquery-2.1.1.js"></script>
+	<script>
+	function TaskStorage(){
+		this.storage = window.localStorage;
+	}
+	TaskStorage.prototype.add  = function addTaskToStorage(taskName){
+		var newTask = {
+			id : new Date().getTime().toString(),
+			name : taskName,
+			isCompleted : false
+		};
+		this.storage.setItem(newTask.id, window.JSON.stringify(newTask));
+		return newTask;			
+	}
+	TaskStorage.prototype.toggle  = function toggleTaskInStorage(taskId){
+		var taskAsString =this.storage.getItem(taskId);
+		var task = window.JSON.parse(taskAsString);
+		task.isCompleted = !task.isCompleted;
+		this.storage.setItem(task.id, window.JSON.stringify(task));
+	}
+	TaskStorage.prototype.remove  = function removeTaskFromStorage(taskId){
+		this.storage.removeItem(taskId);
+	}
+	TaskStorage.prototype.getAll  = function getAllTasksFromStorage(){
+		var result = [];
+		for(var i=0;i<this.storage.length;i++){
+			var key = this.storage.key(i);
+			var taskAsString =this.storage.getItem(key);
+			var task = window.JSON.parse(taskAsString);
+			result.push(task);
+		}
+		return result;
+	}
+
+	$(function(){
+		var storage = new TaskStorage;
+
+		var allTasks = storage.getAll();
+		$.each(allTasks, function(index,task){
+			addTaskToList(task);
+		});
+
+		$("#btnAddTask").click(function(){
+			var taskName = $("#txtTask").val();
+			var newTask = storage.add(taskName);
+			addTaskToList(newTask);
+		});
+		$("#olTaskList").on("click","li",function(){
+			$(this).toggleClass("completed");
+			storage.toggle($(this).attr("task-id"));
+		})
+		function addTaskToList(task){
+			$("<li>")
+				.attr("task-id", task.id)
+				.html(task.name)
+				.addClass(task.isCompleted ? "completed" : "")
+				.appendTo("#olTaskList");
+		}
+		$("#btnRemoveCompleted").click(function(){
+			$("li.completed").each(function(index,elem){
+				var $elem = $(elem);
+				var taskIdToRemove = $elem.attr("task-id");
+				storage.remove(taskIdToRemove);
+			}).remove();
+		})
+		
+	});
+	</script>
+</head>
+<body>
+	<h1>Task Manager</h1>
+	<hr>
+	<label for="">Task :</label>
+	<input type="text" name="" id="txtTask">
+	<input type="button" value="Add Task" id="btnAddTask">
+	<input type="button" value="Remove Completed" id="btnRemoveCompleted">
+	<ol id="olTaskList"></ol>
+</body>
+</html>
