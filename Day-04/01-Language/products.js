@@ -10,3 +10,14 @@ var categories = [
 	{id : 1, name : "stationary"},
 	{id : 2, name : "grocery"}
 ];
+
+console.log("Default list");
+console.table(products);
+
+function sort(){
+	//fill in the blanks
+}
+
+console.log("After sorting");
+sort();
+console.table(products);
