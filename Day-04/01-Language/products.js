@@ -67,3 +67,30 @@ var productComparerByValue = function(p1,p2){
 console.log("After sorting [product value]");
 sort(products,productComparerByValue);
 console.table(products);
+
+var filter = function(list, criteriaFn){
+  var result = [];
+  for(var i=0;i<list.length;i++)
+     if (criteriaFn(list[i]) === true)
+        result.push(list[i]);
+  return result;
+}
+
+var costlyProductCriteria = function(item){
+	return item.cost > 50;
+}
+
+var costlyProducts = filter(products,costlyProductCriteria)
+console.log("Costly products [cost > 50]")
+console.table(costlyProducts);
+
+function inverseCriteria(criteriaFn){
+	return function(){
+		return !criteriaFn.apply(this, arguments);
+	}
+}
+
+var affordableProductsCriteria = inverseCriteria(costlyProductCriteria);
+var affordableProducts = filter(products, affordableProductsCriteria);
+console.log("Affordable products [!costly products]")
+console.table(affordableProducts);
