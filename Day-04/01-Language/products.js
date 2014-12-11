@@ -94,3 +94,67 @@ var affordableProductsCriteria = inverseCriteria(costlyProductCriteria);
 var affordableProducts = filter(products, affordableProductsCriteria);
 console.log("Affordable products [!costly products]")
 console.table(affordableProducts);
+
+var min = function(list, selectorFn){
+	var result = selectorFn(list[0]);
+	for(var i=1;i<list.length;i++){
+		var value = selectorFn(list[i]);
+		if (value < result)  result = value;
+	}
+	return result;
+}
+
+var minCost = min(products, function(p){ return p.cost;});
+console.log("Min cost = ", minCost)
+
+var max = function(list, selectorFn){
+	var result = selectorFn(list[0]);
+	for(var i=1;i<list.length;i++){
+		var value = selectorFn(list[i]);
+		if (value > result)  result = value;
+	}
+	return result;
+}
+
+var maxCost = max(products,function(p){ return p.cost;});
+console.log("Max cost = ", maxCost);
+
+var countBy = function(list,predicate){
+	var result = 0;
+	for(var i=0;i<list.length;i++)
+		if (predicate(list[i])) result++;
+	return result;
+}
+
+var cosltyProductsCount = countBy(products, function(p){ return p.cost > 50});
+console.log("Number of costly products = ", cosltyProductsCount);
+
+var any = function(list, predicate){
+	for(var i=0;i<list.length;i++)
+		if (predicate(list[i])) return true;
+	return false;
+}
+
+console.log("Are there ANY costly products ? ", any(products, function(p){ return p.cost > 50}));
+
+var all = function(list, predicate){
+	for(var i=0;i<list.length;i++)
+		if (!predicate(list[i])) return false;
+	return true;
+}
+
+console.log("Are ALL the products costly ? ", all(products, function(p){ return p.cost > 50}));
+
+var groupBy = function(list, keySelector){
+	var result = {};
+	for(var i=0;i<list.length;i++){
+		var key = keySelector(list[i]);
+		result[key] = result[key] || [];
+		result[key].push(list[i]);
+	}
+	return result;
+}
+
+var productsByCategory = groupBy(products, function(p){ return p.category});
+
+var productsByCost = groupBy(products, function(p){ return p.cost> 50 ? "costly" : "affordable"});
