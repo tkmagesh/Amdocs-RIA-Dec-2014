@@ -1,0 +1,17 @@
+{
+  "name": "AmdocsSocketServer",
+  "version": "0.1.0",
+  "description": "A simlple socket server for demonstrating web sockets",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "websockets"
+  ],
+  "author": "Magesh K",
+  "license": "ISC",
+  "dependencies": {
+    "nodejs-websocket": "^1.1.0"
+  }
+}
