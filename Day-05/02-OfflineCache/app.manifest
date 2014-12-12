@@ -1,0 +1,15 @@
+CACHE MANIFEST
+#VER 1.0
+
+CACHE:
+#Include the resources to be cached except the master (index.html)
+jquery-2.1.1.js
+TaskStorage.js
+TaskManager.js
+style.css
+
+NETWORK:
+*
+
+FALLBACK:
+style-online.css	style-offline.css
