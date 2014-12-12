@@ -8,9 +8,18 @@
 	<script src="jquery-2.1.1.js"></script>
 	<script src="TaskStorage.js"></script>
 	<script src="TaskManager.js"></script>
+	<script>
+	applicationCache.addEventListener("updateready", function(){
+		var response = confirm("A new version of the application is available. Do you want to refresh?");
+		if (response){
+			window.location.reload();
+		}
+	});
+	</script>
 </head>
+
 <body>
-	<h1>Task Manager</h1>
+	<h1>Task Manager - Ver 2.0</h1>
 	<hr>
 	<label for="">Task :</label>
 	<input type="text" name="" id="txtTask">
